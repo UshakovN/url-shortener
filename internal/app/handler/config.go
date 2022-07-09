@@ -1,6 +1,9 @@
 package handler
 
-import "github.com/UshakovN/url-shortener.git/internal/app/store"
+import (
+	"github.com/UshakovN/url-shortener.git/internal/app/db"
+	"github.com/UshakovN/url-shortener.git/internal/app/store"
+)
 
 type Config struct {
 	port  string
@@ -10,6 +13,6 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		port:  ":8080",
-		store: store.NewStore(),
+		store: db.NewStore(db.NewConfig()),
 	}
 }

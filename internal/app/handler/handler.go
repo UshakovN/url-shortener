@@ -28,8 +28,18 @@ func NewHandler(config *Config) *Handler {
 
 func (h *Handler) Start() error {
 	h.configureRouter()
+	if err := h.configureStore(); err != nil {
+		return err
+	}
 	log.Printf("server is started at port %s", h.config.port)
 	return http.ListenAndServe(h.config.port, h.router)
+}
+
+func (h *Handler) configureStore() error {
+	if err := h.store.Open(); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (h *Handler) configureRouter() {
